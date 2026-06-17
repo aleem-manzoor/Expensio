@@ -49,15 +49,16 @@ class SplashView extends GetView<SplashController> {
                   const Spacer(),
                   CustomButton(
                     text: "Get Started",
-                    onPress: () async {
-                      String? isShown = await LocalDB.getData('onBoarding');
-                      if (isShown != null) {
-                        Get.offAllNamed(Routes.LOGIN);
-                      } else {
-                        // Get.offAndToNamed(Routes.ONBOARDING); //todo
-                      }
+                    onPress: ()  {
+                      Get.offAllNamed(Routes.LOGIN);
+                      // String? isShown = await LocalDB.getData('onBoarding');
+                      // if (isShown != null) {
+                      //   Get.offAllNamed(Routes.LOGIN);
+                      // } else {
+                      //   // Get.offAndToNamed(Routes.ONBOARDING); //todo
+                      // }
 
-                      // Get.toNamed(Routes.ONBOARDING); //todo
+                      // // Get.toNamed(Routes.ONBOARDING); //todo
                     },
                     textColor: AppColors.white,
                     boxColor: AppColors.primary,

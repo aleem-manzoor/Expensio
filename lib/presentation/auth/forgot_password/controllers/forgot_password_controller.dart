@@ -1,36 +1,37 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/routes/app_pages.dart';
 import 'package:ppsc_preparation/app/utils/utils.dart';
-import 'package:ppsc_preparation/data/repositories/authentication_repository.dart';
+import 'package:ppsc_preparation/data/provider/firebase/firebase_auth_service.dart';
 
 class ForgotPasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  ProfileRepository profileRepository = ProfileRepository();
   TextEditingController emailController = TextEditingController();
+  RxBool isLoading = false.obs;
 
   Future<void> forgetPassword() async {
+    isLoading.value = true;
+    update();
     try {
-      final response = await profileRepository.forgetPasswordEmail(
-        email: emailController.text.trim(),
-      );
-      if (response != null) {
-        if (response['success'] == true) {
-          Get.toNamed(Routes.OTP, arguments: {
-            "email": emailController.text.trim(),
-            "fromRegister": false
-          });
-        } else {
-          Utils.showToast(message: response['message']);
-        }
-      } else {
-        log('Registration failed with status: ${response.statusCode}');
-        throw Exception('Failed to register: ${response.statusMessage}');
-      }
-    } catch (e) {
-      log('Registration failed with status: ${e.toString()}');
+      await FirebaseAuthService.sendPasswordReset(emailController.text.trim());
+      Utils.showToast(message: 'Password reset email sent! Check your inbox.');
+      Get.back();
+    } on FirebaseAuthException catch (e) {
+      final msg = e.code == 'user-not-found'
+          ? 'No account found with this email.'
+          : 'Failed to send reset email. Try again.';
+      Utils.showToast(message: msg);
+    } catch (_) {
+      Utils.showToast(message: 'Something went wrong. Please try again.');
+    } finally {
+      isLoading.value = false;
+      update();
     }
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    super.onClose();
   }
 }

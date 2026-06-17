@@ -1,19 +1,14 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ppsc_preparation/app/config/global_var.dart';
 import 'package:ppsc_preparation/app/routes/app_pages.dart';
 import 'package:ppsc_preparation/app/utils/utils.dart';
-import 'package:ppsc_preparation/data/repositories/authentication_repository.dart';
+import 'package:ppsc_preparation/data/model/user_model.dart';
+import 'package:ppsc_preparation/data/provider/firebase/firebase_auth_service.dart';
 
 class SignupController extends GetxController {
-  //TODO: Implement SignupController
-
-  final count = 0.obs;
   final loginFormKey = GlobalKey<FormState>();
-
-  ProfileRepository profileRepository = ProfileRepository();
-
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -22,47 +17,67 @@ class SignupController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
   RxBool showPassword = false.obs;
   RxBool showConfirmPassword = false.obs;
+  RxBool isLoading = false.obs;
   bool isReceiveEmail = false;
 
-  Future<void> register(
-      {required String phoneNumber,
-      required String firstName,
-      required String lastName,
-      required String email,
-      required password}) async {
+  Future<void> register({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+  }) async {
+    if (isLoading.value) return;
+    isLoading.value = true;
+    update();
     try {
-      final response = await profileRepository.registerAccount(
-          email: email,
-          phone: phoneNumber,
-          firstName: firstName,
-          lastName: lastName,
-          password: password);
-      if (response != null) {
-        if (response['success'] == true) {
-          Get.toNamed(Routes.OTP,
-              arguments: {"email": email.trim(), "fromRegister": true});
-          Utils.showToast(message: response['message']);
-        } else if (response['success'] == false &&
-            response['message'] ==
-                'Phone number already linked with another account') {
-          Utils.showToast(
-              message:
-                  'This phone number is already linked with another account. Please use another number.');
-        } else if (response['success'] == false &&
-            response['message'] == 'User already exists') {
-          Utils.showToast(
-              message:
-                  'This email is already registered. Please log in or reset your password.');
-        } else {
-          Utils.showToast(message: response['message']);
-        }
-      } else {
-        log('Registration failed with status: ${response.statusCode}');
-        Utils.showToast(message: response['message']);
-        throw Exception('Failed to register: ${response.statusMessage}');
-      }
-    } catch (e) {
-      log('-----String----${e.toString()}');
+      final data = await FirebaseAuthService.register(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phoneNumber,
+      );
+      Globals.userId = data['uid'] as String;
+      Globals.user = UserModel(
+        firstName: data['firstName'] as String?,
+        lastName: data['lastName'] as String?,
+        phoneNumber: data['phone'] as String?,
+        email: data['email'] as String?,
+      );
+      Utils.showToast(message: 'Account created successfully!');
+      Get.offAllNamed(Routes.MAIN);
+    } on FirebaseAuthException catch (e) {
+      Utils.showToast(message: _authError(e.code));
+    } catch (_) {
+      Utils.showToast(message: 'Something went wrong. Please try again.');
+    } finally {
+      isLoading.value = false;
+      update();
     }
+  }
+
+  String _authError(String code) {
+    switch (code) {
+      case 'email-already-in-use':
+        return 'This email is already registered. Please login.';
+      case 'weak-password':
+        return 'Password is too weak. Use at least 6 characters.';
+      case 'invalid-email':
+        return 'Invalid email address.';
+      default:
+        return 'Registration failed. Please try again.';
+    }
+  }
+
+  @override
+  void onClose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.onClose();
   }
 }

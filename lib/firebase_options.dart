@@ -57,19 +57,18 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDnB2ZLW_KLuxtEJQT1H8RR2r2_8rKzq20',
-    appId: '1:4103511628:android:79a21f5578ca82dc999ee9',
-    messagingSenderId: '4103511628',
-    projectId: 'jobber-71b8c',
-    storageBucket: 'jobber-71b8c.firebasestorage.app',
+    apiKey: 'AIzaSyCs4Kn8Wl96W_At_2-pK5zcB1j55UuNGaU',
+    appId: '1:220701742919:android:7f18e21eb9e07fde82de62',
+    messagingSenderId: '220701742919',
+    projectId: 'expense-tracker-41009',
+    storageBucket: 'expense-tracker-41009.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAEkoNIKErmuxktgq1kFw5dbFKOe1dTT_I',
-    appId: '1:4103511628:ios:45bc8abe790f83c1999ee9',
-    messagingSenderId: '4103511628',
-    projectId: 'jobber-71b8c',
-    storageBucket: 'jobber-71b8c.firebasestorage.app',
-    iosBundleId: 'com.example.jobber',
+    apiKey: 'AIzaSyB_UFmtyTghBbLW6OjfiUorGKvW9eoLcWQ',
+    appId: '1:220701742919:ios:56c13917e7c548d082de62',
+    messagingSenderId: '220701742919',
+    projectId: 'expense-tracker-41009',
+    storageBucket: 'expense-tracker-41009.firebasestorage.app',
+    iosBundleId: 'com.example.ppscPreparation',
   );
 }

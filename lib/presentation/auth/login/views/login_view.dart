@@ -151,23 +151,28 @@ class LoginView extends GetView<LoginController> {
                         ],
                       ).paddingOnly(bottom: 2.h),
 
-                      CustomButton(
-                          text: 'Login',
+                      Obx(() => CustomButton(
+                          text: controller.isLoading.value
+                              ? 'Logging in...'
+                              : 'Login',
                           radius: 30,
                           fontSize: 15.sp,
                           weight: FontWeight.w600,
-                          onPress: () async {
-                            FocusManager.instance.primaryFocus!.unfocus();
-                            if (controller.loginFormKey.currentState!
-                                .validate()) {
-                              await controller.login(
-                                  controller.emailController.text.trim(),
-                                  controller.passwordController.text
-                                      .trim()); //todo
-                            }
-                          },
+                          isCupertinoIndicator: controller.isLoading.value,
+                          onPress: controller.isLoading.value
+                              ? null
+                              : () async {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                  if (controller.loginFormKey.currentState!
+                                      .validate()) {
+                                    await controller.login(
+                                        controller.emailController.text.trim(),
+                                        controller.passwordController.text
+                                            .trim());
+                                  }
+                                },
                           textColor: AppColors.white,
-                          boxColor: AppColors.primary),
+                          boxColor: AppColors.primary)),
 
                       // Row(
                       //   children: [

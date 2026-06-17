@@ -195,27 +195,38 @@ class SignupView extends GetView<SignupController> {
                         ],
                       ).paddingOnly(bottom: 2.h),
 
-                      CustomButton(
-                          text: 'Create Account',
+                      Obx(() => CustomButton(
+                          text: controller.isLoading.value
+                              ? 'Creating Account...'
+                              : 'Create Account',
                           radius: 30,
                           fontSize: 15.sp,
                           weight: FontWeight.w600,
-                          onPress: () async {
-                            if (controller.loginFormKey.currentState!
-                                .validate()) {
-                              FocusManager.instance.primaryFocus!.unfocus();
-                              await controller.register(
-                                  email: controller.emailController.text.trim(),
-                                  firstName: controller.firstNameController.text
-                                      .trim(),
-                                  lastName: controller.lastNameController.text,
-                                  phoneNumber:
-                                      controller.phoneController.text.trim(),
-                                  password: controller.passwordController.text);
-                            }
-                          },
+                          isCupertinoIndicator: controller.isLoading.value,
+                          onPress: controller.isLoading.value
+                              ? null
+                              : () async {
+                                  if (controller.loginFormKey.currentState!
+                                      .validate()) {
+                                    FocusManager.instance.primaryFocus!
+                                        .unfocus();
+                                    await controller.register(
+                                        email: controller.emailController.text
+                                            .trim(),
+                                        firstName: controller
+                                            .firstNameController.text
+                                            .trim(),
+                                        lastName:
+                                            controller.lastNameController.text,
+                                        phoneNumber: controller
+                                            .phoneController.text
+                                            .trim(),
+                                        password:
+                                            controller.passwordController.text);
+                                  }
+                                },
                           textColor: AppColors.white,
-                          boxColor: AppColors.primary),
+                          boxColor: AppColors.primary)),
 
                       // Row(
                       //   children: [

@@ -25,44 +25,47 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = isExpense ? AppColors.expense : AppColors.income;
+    final bgColor = isExpense ? AppColors.expenseLight : AppColors.incomeLight;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withValues(alpha:0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+              color: AppColors.primary.withValues(alpha: 0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Row(
           children: [
             Container(
-              width: 44,
-              height: 44,
+              width: 46,
+              height: 46,
               decoration: BoxDecoration(
-                color: (isExpense ? AppColors.red : AppColors.primary).withValues(alpha:0.12),
-                borderRadius: BorderRadius.circular(12),
+                color: bgColor,
+                borderRadius: BorderRadius.circular(14),
               ),
               child: Icon(
                 isExpense ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
-                color: isExpense ? AppColors.red : AppColors.primary,
-                size: 20,
+                color: color,
+                size: 22,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyText(title: title, size: 13, weight: FontWeight.w600, clr: AppColors.black),
-                  const SizedBox(height: 2),
+                  MyText(title: title, size: 13, weight: FontWeight.w700, clr: AppColors.black),
+                  const SizedBox(height: 3),
                   MyText(title: subtitle, size: 11, weight: FontWeight.w400, clr: AppColors.greyText),
                 ],
               ),
@@ -71,25 +74,32 @@ class TransactionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 MyText(
-                  title: '${isExpense ? '-' : '+'} Rs ${amount.toStringAsFixed(0)}',
+                  title: '${isExpense ? '−' : '+'} Rs ${amount.toStringAsFixed(0)}',
                   size: 13,
                   weight: FontWeight.w700,
-                  clr: isExpense ? AppColors.red : AppColors.primary,
+                  clr: color,
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 3),
                 MyText(
                   title: DateFormat('d MMM').format(date),
                   size: 10,
                   weight: FontWeight.w400,
-                  clr: AppColors.greyText,
+                  clr: AppColors.lightText,
                 ),
               ],
             ),
             if (onDelete != null) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: 10),
               GestureDetector(
                 onTap: onDelete,
-                child: const Icon(Icons.delete_outline, color: AppColors.red, size: 18),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: AppColors.expenseLight,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.delete_outline_rounded, color: AppColors.expense, size: 16),
+                ),
               ),
             ],
           ],

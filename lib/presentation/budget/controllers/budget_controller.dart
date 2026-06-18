@@ -62,15 +62,27 @@ class BudgetController extends GetxController {
 
   Future<void> saveBudget() async {
     if (!formKey.currentState!.validate()) return;
+
+    final totalBudget = double.tryParse(totalBudgetCtrl.text) ?? 0;
+    final Map<String, double> categoryBudgets = {};
+    for (final cat in AppConstants.expenseCategories) {
+      final val = double.tryParse(categoryControllers[cat]?.text ?? '0') ?? 0;
+      if (val > 0) categoryBudgets[cat] = val;
+    }
+
+    final categoryTotal = categoryBudgets.values.fold(0.0, (a, b) => a + b);
+    if (categoryTotal > totalBudget) {
+      Utils.showToast(
+        message:
+            'Category limits total (Rs ${categoryTotal.toStringAsFixed(0)}) exceeds your monthly budget (Rs ${totalBudget.toStringAsFixed(0)})',
+      );
+      return;
+    }
+
     isSaving.value = true;
     try {
-      final Map<String, double> categoryBudgets = {};
-      for (final cat in AppConstants.expenseCategories) {
-        final val = double.tryParse(categoryControllers[cat]?.text ?? '0') ?? 0;
-        if (val > 0) categoryBudgets[cat] = val;
-      }
       await BudgetRepository.setBudget(
-        totalBudget: double.tryParse(totalBudgetCtrl.text) ?? 0,
+        totalBudget: totalBudget,
         categoryBudgets: categoryBudgets,
         month: selectedMonth.value,
         year: selectedYear.value,

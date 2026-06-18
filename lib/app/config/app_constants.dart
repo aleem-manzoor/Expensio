@@ -5,9 +5,7 @@ class AppConstants {
     'Shopping',
     'Entertainment',
     'Health & Medical',
-    'Housing',
     'Education',
-    'Travel',
     'Utilities',
     'Other',
   ];

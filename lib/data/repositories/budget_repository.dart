@@ -43,8 +43,16 @@ class BudgetRepository {
     }
   }
 
-  static List<BudgetModel> getAllBudgets() => HiveService.getAllBudgets();
+  static List<BudgetModel> getAllBudgets() =>
+      HiveService.getAllBudgets().where((b) => b.userId == _userId).toList();
 
-  static BudgetModel? getBudgetForMonth(int month, int year) =>
-      HiveService.getBudgetForMonth(month, year);
+  static BudgetModel? getBudgetForMonth(int month, int year) {
+    try {
+      return HiveService.getAllBudgets().firstWhere(
+        (b) => b.userId == _userId && b.month == month && b.year == year,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
 }

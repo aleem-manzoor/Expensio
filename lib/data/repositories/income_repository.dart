@@ -53,7 +53,8 @@ class IncomeRepository {
     }
   }
 
-  static List<IncomeModel> getAllIncomes() => HiveService.getAllIncomes();
+  static List<IncomeModel> getAllIncomes() =>
+      HiveService.getAllIncomes().where((i) => i.userId == _userId).toList();
 
   static List<IncomeModel> getIncomesByMonth(int month, int year) {
     return HiveService.getAllIncomes()

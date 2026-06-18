@@ -27,7 +27,9 @@ class SyncService {
   }
 
   static Future<void> _syncExpenses() async {
-    final unsynced = HiveService.getUnsyncedExpenses();
+    final unsynced = HiveService.getUnsyncedExpenses()
+        .where((e) => e.userId == _userId)
+        .toList();
     for (final expense in unsynced) {
       try {
         await FirestoreService.uploadExpense(_userId, expense);
@@ -38,7 +40,9 @@ class SyncService {
   }
 
   static Future<void> _syncIncomes() async {
-    final unsynced = HiveService.getUnsyncedIncomes();
+    final unsynced = HiveService.getUnsyncedIncomes()
+        .where((i) => i.userId == _userId)
+        .toList();
     for (final income in unsynced) {
       try {
         await FirestoreService.uploadIncome(_userId, income);
@@ -49,7 +53,9 @@ class SyncService {
   }
 
   static Future<void> _syncBudgets() async {
-    final unsynced = HiveService.getUnsyncedBudgets();
+    final unsynced = HiveService.getUnsyncedBudgets()
+        .where((b) => b.userId == _userId)
+        .toList();
     for (final budget in unsynced) {
       try {
         await FirestoreService.uploadBudget(_userId, budget);

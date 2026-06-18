@@ -55,7 +55,8 @@ class ExpenseRepository {
     }
   }
 
-  static List<ExpenseModel> getAllExpenses() => HiveService.getAllExpenses();
+  static List<ExpenseModel> getAllExpenses() =>
+      HiveService.getAllExpenses().where((e) => e.userId == _userId).toList();
 
   static List<ExpenseModel> getExpensesByMonth(int month, int year) {
     return HiveService.getAllExpenses()

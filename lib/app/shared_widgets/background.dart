@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ppsc_preparation/app/config/app_colors.dart';
-import 'package:ppsc_preparation/app/utils/utils.dart';
+import 'package:expensio/app/config/app_colors.dart';
+import 'package:expensio/app/utils/utils.dart';
 
 class Background extends StatelessWidget {
   final Widget child;

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/utils/utils.dart';
-import 'package:ppsc_preparation/data/provider/firebase/firebase_auth_service.dart';
+import 'package:expensio/app/utils/utils.dart';
+import 'package:expensio/data/provider/firebase/firebase_auth_service.dart';
 
 class ForgotPasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();

@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
-// import 'package:ppsc_preparation/app/config/app_colors.dart';
+// import 'package:expensio/app/config/app_colors.dart';
 // import 'package:sizer/sizer.dart';
 
 // class CustomRichText extends StatelessWidget {

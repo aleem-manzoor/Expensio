@@ -1,6 +1,8 @@
+import 'package:expensio/app/shared_widgets/custom_assetimage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/config/app_colors.dart';
+import '../../../app/utils/utils.dart';
 import '../controllers/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
@@ -18,16 +20,7 @@ class SplashView extends GetView<SplashController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(26),
-                      border: Border.all(color: AppColors.white.withValues(alpha: 0.3), width: 1.5),
-                    ),
-                    child: const Icon(Icons.account_balance_wallet_rounded, color: AppColors.white, size: 44),
-                  ),
+                  const CustomAssetIcon(path: 'logo-new'),
                   const SizedBox(height: 24),
                   const Text(
                     'Expensio',

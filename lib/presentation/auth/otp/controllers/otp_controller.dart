@@ -4,12 +4,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/config/global_var.dart';
-import 'package:ppsc_preparation/app/routes/app_pages.dart';
-import 'package:ppsc_preparation/app/utils/utils.dart';
-import 'package:ppsc_preparation/data/model/user_model.dart';
-import 'package:ppsc_preparation/data/provider/local_storage/local_db.dart';
-import 'package:ppsc_preparation/data/repositories/authentication_repository.dart';
+import 'package:expensio/app/config/global_var.dart';
+import 'package:expensio/app/routes/app_pages.dart';
+import 'package:expensio/app/utils/utils.dart';
+import 'package:expensio/data/model/user_model.dart';
+import 'package:expensio/data/provider/local_storage/local_db.dart';
+import 'package:expensio/data/repositories/authentication_repository.dart';
 
 class OtpController extends GetxController {
   final TextEditingController otpController = TextEditingController();

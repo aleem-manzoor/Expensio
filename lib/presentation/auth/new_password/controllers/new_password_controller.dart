@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/routes/app_pages.dart';
-import 'package:ppsc_preparation/app/utils/utils.dart';
-import 'package:ppsc_preparation/data/repositories/authentication_repository.dart';
+import 'package:expensio/app/routes/app_pages.dart';
+import 'package:expensio/app/utils/utils.dart';
+import 'package:expensio/data/repositories/authentication_repository.dart';
 
 class NewPasswordController extends GetxController {
   final newFormKey = GlobalKey<FormState>();

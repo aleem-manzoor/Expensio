@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ppsc_preparation/data/provider/local_storage/local_db.dart';
-import 'package:ppsc_preparation/firebase_options.dart';
+import 'package:expensio/data/provider/local_storage/local_db.dart';
+import 'package:expensio/firebase_options.dart';
 import 'package:sizer/sizer.dart';
-import 'package:ppsc_preparation/app/config/app_colors.dart';
+import 'package:expensio/app/config/app_colors.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/connectivity_service.dart';
 

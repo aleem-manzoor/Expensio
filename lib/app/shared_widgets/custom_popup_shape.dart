@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/config/app_colors.dart';
-import 'package:ppsc_preparation/app/extensions/extensions.dart';
-import 'package:ppsc_preparation/app/shared_widgets/custom_cricle_avatar.dart';
-import 'package:ppsc_preparation/app/shared_widgets/custom_dialog.dart';
-import 'package:ppsc_preparation/app/shared_widgets/custom_svg_image.dart';
-import 'package:ppsc_preparation/app/shared_widgets/my_text.dart';
-import 'package:ppsc_preparation/app/utils/utils.dart';
+import 'package:expensio/app/config/app_colors.dart';
+import 'package:expensio/app/extensions/extensions.dart';
+import 'package:expensio/app/shared_widgets/custom_cricle_avatar.dart';
+import 'package:expensio/app/shared_widgets/custom_dialog.dart';
+import 'package:expensio/app/shared_widgets/custom_svg_image.dart';
+import 'package:expensio/app/shared_widgets/my_text.dart';
+import 'package:expensio/app/utils/utils.dart';
 import 'package:sizer/sizer.dart';
 
 class TooltipShape extends ShapeBorder {

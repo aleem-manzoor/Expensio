@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppsc_preparation/app/config/app_colors.dart';
-import 'package:ppsc_preparation/app/routes/app_pages.dart';
-import 'package:ppsc_preparation/app/shared_widgets/my_text.dart';
+import 'package:expensio/app/config/app_colors.dart';
+import 'package:expensio/app/routes/app_pages.dart';
+import 'package:expensio/app/shared_widgets/my_text.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {

@@ -2,11 +2,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../model/expense_model.dart';
 import '../../model/income_model.dart';
 import '../../model/budget_model.dart';
+import '../../../app/config/global_var.dart';
 
 class HiveService {
   static Box<String> get _expenseBox => Hive.box<String>('expenses');
   static Box<String> get _incomeBox => Hive.box<String>('incomes');
   static Box<String> get _budgetBox => Hive.box<String>('budgets');
+
+  /// Records live in device-wide boxes, so every read must be scoped to the
+  /// signed-in user — otherwise a new login sees the previous account's data.
+  static String get _userId =>
+      Globals.userId.isNotEmpty ? Globals.userId : 'local';
 
   // Expenses
   static Future<void> saveExpense(ExpenseModel expense) async {
@@ -20,6 +26,7 @@ class HiveService {
   static List<ExpenseModel> getAllExpenses() {
     return _expenseBox.values
         .map((e) => ExpenseModel.fromJson(e))
+        .where((e) => e.userId == _userId)
         .toList()
       ..sort((a, b) => b.date.compareTo(a.date));
   }
@@ -27,7 +34,7 @@ class HiveService {
   static List<ExpenseModel> getUnsyncedExpenses() {
     return _expenseBox.values
         .map((e) => ExpenseModel.fromJson(e))
-        .where((e) => !e.isSynced)
+        .where((e) => e.userId == _userId && !e.isSynced)
         .toList();
   }
 
@@ -49,6 +56,7 @@ class HiveService {
   static List<IncomeModel> getAllIncomes() {
     return _incomeBox.values
         .map((e) => IncomeModel.fromJson(e))
+        .where((e) => e.userId == _userId)
         .toList()
       ..sort((a, b) => b.date.compareTo(a.date));
   }
@@ -56,7 +64,7 @@ class HiveService {
   static List<IncomeModel> getUnsyncedIncomes() {
     return _incomeBox.values
         .map((e) => IncomeModel.fromJson(e))
-        .where((e) => !e.isSynced)
+        .where((e) => e.userId == _userId && !e.isSynced)
         .toList();
   }
 
@@ -72,13 +80,14 @@ class HiveService {
   static List<BudgetModel> getAllBudgets() {
     return _budgetBox.values
         .map((e) => BudgetModel.fromJson(e))
+        .where((e) => e.userId == _userId)
         .toList();
   }
 
   static List<BudgetModel> getUnsyncedBudgets() {
     return _budgetBox.values
         .map((e) => BudgetModel.fromJson(e))
-        .where((e) => !e.isSynced)
+        .where((e) => e.userId == _userId && !e.isSynced)
         .toList();
   }
 
@@ -86,7 +95,8 @@ class HiveService {
     try {
       return _budgetBox.values
           .map((e) => BudgetModel.fromJson(e))
-          .firstWhere((b) => b.month == month && b.year == year);
+          .firstWhere((b) =>
+              b.userId == _userId && b.month == month && b.year == year);
     } catch (_) {
       return null;
     }
